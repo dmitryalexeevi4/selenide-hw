@@ -62,7 +62,7 @@ public class TestCase {
     }
 
     @Test(dependsOnMethods = "sectionSelectTest")
-    public void moveCursorToTest() throws InterruptedException {
+    public void moveCursorToTest() {
         LOG.info("Наводим курсок на блок Финансовой свободы");
         new Actions(webDriver).moveToElement(webDriver.findElement(By.id("can-spend"))).perform();
 
