@@ -4,9 +4,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.xml.dom.Tag;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,17 +24,17 @@ public class TestCase {
         webDriver = new ChromeDriver();
     }
 
-    @Test
+    @Test(groups = "login")
     public void loginPageTest() {
-        webDriver.get("https://idemo.bspb.ru");
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        webDriver.get("https://idemo.bspb.ru");
         new LoginPage(webDriver).login("demo", "demo");
         LOG.info("Проверка на отображение формы двухфакторной авторизации...");
         Assert.assertTrue(webDriver.findElement(By.id("login-form")).isDisplayed());
         LOG.info("Форма отображена");
     }
 
-    @Test(dependsOnMethods = "loginPageTest")
+    @Test(groups = "login", dependsOnMethods = "loginPageTest")
     public void otpCodeTest() {
         new LoginPage(webDriver).login("0000");
         LOG.info("Проверка на осуществление входа в систему...");
@@ -39,7 +42,7 @@ public class TestCase {
         LOG.info("Вход осуществлен");
     }
 
-    @Test(dependsOnMethods = "otpCodeTest")
+    @Test(dependsOnGroups = "login")
     public void sectionSelectTest() {
         new MainPage(webDriver).openNavBarSection("Обзор");
         LOG.info("Проверка нахождения на странице \"Обзор\"");
@@ -55,11 +58,12 @@ public class TestCase {
     }
 
     @Test(dependsOnMethods = "sectionSelectTest")
-    public void moveCursorToTest() {
+    public void moveCursorToTest() throws InterruptedException {
         LOG.info("Наводим курсок на блок Финансовой свободы");
         new Actions(webDriver).moveToElement(webDriver.findElement(By.id("can-spend"))).perform();
 
         LOG.info("Проверка отображения строки \"Мои финансы\"...");
+        Thread.sleep(2000);
         WebElement myAssets = webDriver.findElement(By.className("my-assets"));
         Assert.assertTrue(myAssets.isDisplayed());
         LOG.info("Cтрока отображена");
