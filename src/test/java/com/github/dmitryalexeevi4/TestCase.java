@@ -22,52 +22,50 @@ public class TestCase {
         webDriver = new ChromeDriver();
     }
 
-    @Test(groups = "login")
-    public void loginPageTest() {
+    @Test
+    public void test() {
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         webDriver.get("https://idemo.bspb.ru");
+        LoginPage loginPage = new LoginPage(webDriver);
+        MainPage mainPage = new MainPage(webDriver);
+        OverviewPage overviewPage = new OverviewPage(webDriver);
 
-        new LoginPage(webDriver).login("demo", "demo");
+        LOG.info("Заполнение полей Username и Password...");
+        loginPage.fieldsInsert("demo", "demo");
 
         LOG.info("Проверка на отображение формы двухфакторной авторизации...");
-        Assert.assertTrue(webDriver.findElement(By.id("login-form")).isDisplayed());
+        Assert.assertTrue(loginPage.findElementById("login-form").isDisplayed());
         LOG.info("Форма отображена");
-    }
 
-    @Test(groups = "login", dependsOnMethods = "loginPageTest")
-    public void otpCodeTest() {
-        new LoginPage(webDriver).login("0000");
+        LOG.info("Заполнение поля для кода...");
+        loginPage.codeInsert("0000");
 
         LOG.info("Проверка на осуществление входа в систему...");
-        Assert.assertTrue(webDriver.findElement(By.id("user-greeting")).isDisplayed());
+        Assert.assertTrue(mainPage.findElementById("user-greeting").isDisplayed());
         LOG.info("Вход осуществлен");
-    }
 
-    @Test(dependsOnGroups = "login")
-    public void sectionSelectTest() {
-        new MainPage(webDriver).openNavBarSection("Обзор");
+        LOG.info("Открытие страницы Обзор/Overview...");
+        mainPage.openNavBarSection("overview");
 
         LOG.info("Проверка нахождения на странице \"Обзор\"");
-        Assert.assertTrue(new OverviewPage(webDriver).getPageHeader().contains("Обзор"));
-        WebElement financialFreedomBlock = webDriver.findElement(By.xpath("//div[@id = 'can-spend']//span[@class='amount']"));
+        Assert.assertTrue(overviewPage.getPageTitle().contains(overviewPage.getPageHeader()));
         LOG.info("Успешно");
 
         LOG.info("Проверка отображения блока \"Финансовая свобода\"...");
-        Assert.assertTrue(financialFreedomBlock.isDisplayed());
+        WebElement financialFreedom = overviewPage.findFinancialFreedom();
+        new WebDriverWait(webDriver, 2).until(ExpectedConditions.visibilityOf(financialFreedom));
+        Assert.assertTrue(financialFreedom.isDisplayed());
         LOG.info("Блок отображен");
 
         LOG.info("Проверка указанной суммы на соответствие формату...");
-        Assert.assertTrue(financialFreedomBlock.getText().matches("\\d{1,3}\\s\\d{3}\\s\\d{3}\\.\\d{2}\\s\\₽"));
+        Assert.assertTrue(financialFreedom.getText().matches("\\d{1,3}\\s\\d{3}\\s\\d{3}\\.\\d{2}\\s\\₽"));
         LOG.info("Формату соответствует");
-    }
 
-    @Test(dependsOnMethods = "sectionSelectTest")
-    public void moveCursorToTest() {
         LOG.info("Наведение курсора на блок Финансовой свободы");
-        new Actions(webDriver).moveToElement(webDriver.findElement(By.id("can-spend"))).perform();
+        new Actions(webDriver).moveToElement(financialFreedom).perform();
 
         LOG.info("Проверка отображения \"Моих средств\"...");
-        WebElement myAssets = webDriver.findElement(By.className("my-assets"));
+        WebElement myAssets = overviewPage.findElementByClassName("my-assets");
         new WebDriverWait(webDriver, 2).until(ExpectedConditions.visibilityOf(myAssets));
         Assert.assertTrue(myAssets.isDisplayed());
         LOG.info("Cтрока отображена");

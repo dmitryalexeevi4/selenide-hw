@@ -2,17 +2,16 @@ package com.github.dmitryalexeevi4;
 
 import org.openqa.selenium.*;
 
-public class LoginPage {
-    private final WebDriver webDriver;
+class LoginPage extends AbstractPage {
     private By usernameField = By.name("username");
     private By passwordField = By.name("password");
     private By otpCodeField = By.name("otpCode");
 
-    public LoginPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+    LoginPage(WebDriver webDriver) {
+        super(webDriver);
     }
 
-    public void login(String username, String password) {
+    void fieldsInsert(String username, String password) {
         webDriver.findElement(usernameField).clear();
         webDriver.findElement(usernameField).sendKeys(username);
         webDriver.findElement(passwordField).clear();
@@ -20,7 +19,7 @@ public class LoginPage {
         webDriver.findElement(By.id("login-button")).click();
     }
 
-    public void login(String code) {
+    void codeInsert(String code) {
         webDriver.findElement(otpCodeField).clear();
         webDriver.findElement(otpCodeField).sendKeys(code);
         webDriver.findElement(By.id("login-otp-button")).click();
