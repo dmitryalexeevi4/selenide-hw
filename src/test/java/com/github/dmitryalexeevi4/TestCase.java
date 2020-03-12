@@ -30,6 +30,9 @@ public class TestCase {
         MainPage mainPage = new MainPage(webDriver);
         OverviewPage overviewPage = new OverviewPage(webDriver);
 
+        /*LOG.info("Переключение языка...");
+        loginPage.languageSwitcher();*/
+
         LOG.info("Заполнение полей Username и Password...");
         loginPage.fieldsInsert("demo", "demo");
 
@@ -71,7 +74,9 @@ public class TestCase {
         LOG.info("Cтрока отображена");
 
         String s = myAssets.getText();
-        String moneyCount = s.substring(s.lastIndexOf(" ", 13)).trim();
+        //String moneyCount = s.substring(s.lastIndexOf(" ", 11)).trim();
+        String moneyCount = s.substring(s.indexOf('2') - 1, s.indexOf('₽') + 1).trim();
+
         LOG.info(moneyCount);
 
         LOG.info("Проверка указанной суммы на соответствие формату...");

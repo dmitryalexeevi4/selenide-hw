@@ -6,9 +6,14 @@ class LoginPage extends AbstractPage {
     private By usernameField = By.name("username");
     private By passwordField = By.name("password");
     private By otpCodeField = By.name("otpCode");
+    private By languageButton = By.xpath("//div[@class='secondary-links']/a[1]");
 
     LoginPage(WebDriver webDriver) {
         super(webDriver);
+    }
+
+    void languageSwitcher() {
+        webDriver.findElement(languageButton).click();
     }
 
     void fieldsInsert(String username, String password) {
