@@ -1,32 +1,41 @@
 package com.github.dmitryalexeevi4;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
 
 class LoginPage extends AbstractPage {
-    private By usernameField = By.name("username");
-    private By passwordField = By.name("password");
-    private By otpCodeField = By.name("otpCode");
-    private By languageButton = By.xpath("//div[@class='secondary-links']/a[1]");
+    @FindBy(name = "username")
+    private WebElement usernameField;
+
+    @FindBy(name = "password")
+    private WebElement passwordField;
+
+    @FindBy(name = "otpCode")
+    private WebElement otpCodeField;
+
+    @FindBy(xpath = "//div[@class='secondary-links']/a[1]")
+    private WebElement languageButton;
+
 
     LoginPage(WebDriver webDriver) {
         super(webDriver);
     }
 
     void languageSwitcher() {
-        webDriver.findElement(languageButton).click();
+        languageButton.click();
     }
 
     void fieldsInsert(String username, String password) {
-        webDriver.findElement(usernameField).clear();
-        webDriver.findElement(usernameField).sendKeys(username);
-        webDriver.findElement(passwordField).clear();
-        webDriver.findElement(passwordField).sendKeys(password);
-        webDriver.findElement(By.id("login-button")).click();
+        usernameField.clear();
+        usernameField.sendKeys(username);
+        passwordField.clear();
+        passwordField.sendKeys(password);
+        findElementById("login-button").click();
     }
 
     void codeInsert(String code) {
-        webDriver.findElement(otpCodeField).clear();
-        webDriver.findElement(otpCodeField).sendKeys(code);
-        webDriver.findElement(By.id("login-otp-button")).click();
+        otpCodeField.clear();
+        otpCodeField.sendKeys(code);
+        findElementById("login-otp-button").click();
     }
 }

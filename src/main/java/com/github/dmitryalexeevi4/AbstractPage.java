@@ -1,6 +1,7 @@
 package com.github.dmitryalexeevi4;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.PageFactory;
 
 
 abstract class AbstractPage {
@@ -8,13 +9,14 @@ abstract class AbstractPage {
 
     AbstractPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
 
-    String getPageHeader() {
+    String pageHeader() {
         return webDriver.findElement(By.xpath("//div[@class = 'page-header']/h1")).getText().toLowerCase();
     }
 
-    String getPageTitle() {
+    String pageTitle() {
         return webDriver.getTitle().toLowerCase();
     }
 
@@ -29,4 +31,5 @@ abstract class AbstractPage {
     WebElement findElementById(String id) {
         return webDriver.findElement(By.id(id));
     }
+
 }

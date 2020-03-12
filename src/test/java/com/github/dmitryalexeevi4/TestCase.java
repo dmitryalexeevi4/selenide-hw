@@ -51,21 +51,20 @@ public class TestCase {
         mainPage.openNavBarSection("overview");
 
         LOG.info("Проверка нахождения на странице \"Обзор\"");
-        Assert.assertTrue(overviewPage.getPageTitle().contains(overviewPage.getPageHeader()));
+        Assert.assertTrue(overviewPage.pageTitle().contains(overviewPage.pageHeader()));
         LOG.info("Успешно");
 
         LOG.info("Проверка отображения блока \"Финансовая свобода\"...");
-        WebElement financialFreedom = overviewPage.findFinancialFreedom();
-        new WebDriverWait(webDriver, 2).until(ExpectedConditions.visibilityOf(financialFreedom));
-        Assert.assertTrue(financialFreedom.isDisplayed());
+        new WebDriverWait(webDriver, 2).until(ExpectedConditions.visibilityOf(overviewPage.financialFreedom));
+        Assert.assertTrue(overviewPage.financialFreedom.isDisplayed());
         LOG.info("Блок отображен");
 
         LOG.info("Проверка указанной суммы на соответствие формату...");
-        Assert.assertTrue(financialFreedom.getText().matches("\\d{1,3}\\s\\d{3}\\s\\d{3}\\.\\d{2}\\s\\₽"));
+        Assert.assertTrue(overviewPage.finFreedomFunds().matches("\\d{1,3}\\s\\d{3}\\s\\d{3}\\.\\d{2}\\s\\₽"));
         LOG.info("Формату соответствует");
 
         LOG.info("Наведение курсора на блок Финансовой свободы");
-        new Actions(webDriver).moveToElement(financialFreedom).perform();
+        new Actions(webDriver).moveToElement(overviewPage.financialFreedom).perform();
 
         LOG.info("Проверка отображения \"Моих средств\"...");
         WebElement myAssets = overviewPage.findElementByClassName("my-assets");
@@ -74,7 +73,6 @@ public class TestCase {
         LOG.info("Cтрока отображена");
 
         String s = myAssets.getText();
-        //String moneyCount = s.substring(s.lastIndexOf(" ", 11)).trim();
         String moneyCount = s.substring(s.indexOf('2') - 1, s.indexOf('₽') + 1).trim();
 
         LOG.info(moneyCount);

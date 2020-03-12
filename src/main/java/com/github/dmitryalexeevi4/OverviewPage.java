@@ -1,15 +1,17 @@
 package com.github.dmitryalexeevi4;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
 
 class OverviewPage extends AbstractPage {
-    private By financialFreedom = By.xpath("//div[@id='can-spend']/span[@class = 'amount-holder']/span");
+    @FindBy (xpath = "//div[@id='can-spend']/span[@class = 'amount-holder']/span")
+    protected WebElement financialFreedom;
 
     OverviewPage(WebDriver webDriver) {
         super(webDriver);
     }
 
-    WebElement findFinancialFreedom() {
-        return webDriver.findElement(financialFreedom);
+    String finFreedomFunds() {
+        return financialFreedom.getText();
     }
 }
