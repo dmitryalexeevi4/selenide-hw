@@ -1,17 +1,10 @@
 package com.github.dmitryalexeevi4;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
+import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
+
+import static com.codeborne.selenide.Selenide.$;
 
 class OverviewPage extends AbstractPage {
-    @FindBy (xpath = "//div[@id='can-spend']/span[@class = 'amount-holder']/span")
-    protected WebElement financialFreedom;
-
-    OverviewPage(WebDriver webDriver) {
-        super(webDriver);
-    }
-
-    String finFreedomFunds() {
-        return financialFreedom.getText();
-    }
+    SelenideElement financialFreedom = $(By.xpath("//div[@id='can-spend']/span[@class = 'amount-holder']/span"));
 }

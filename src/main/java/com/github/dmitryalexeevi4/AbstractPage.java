@@ -1,35 +1,30 @@
 package com.github.dmitryalexeevi4;
 
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.PageFactory;
 
+import static com.codeborne.selenide.Selenide.*;
 
 abstract class AbstractPage {
-    protected final WebDriver webDriver;
 
-    AbstractPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
+    String firstTitleWord() {
+        return title().substring(0, title().indexOf(' '));
     }
 
-    String pageHeader() {
-        return webDriver.findElement(By.xpath("//div[@class = 'page-header']/h1")).getText().toLowerCase();
-    }
-
-    String pageTitle() {
-        return webDriver.getTitle().toLowerCase();
+    SelenideElement pageHeader() {
+        return $(By.xpath("//div[@class = 'page-header']/h1"));
     }
 
     void openNavBarSection(String sectionId) {
-        webDriver.findElement(By.xpath("//ul[@class = 'navigation-menu nav']//li[@id = '" + sectionId + "']")).click();
+        $(By.xpath("//ul[@class = 'navigation-menu nav']//li[@id = '" + sectionId + "']")).click();
     }
 
-    WebElement findElementByClassName(String className) {
-        return webDriver.findElement(By.className(className));
+    SelenideElement findElementByClassName(String className) {
+        return $(By.className(className));
     }
 
-    WebElement findElementById(String id) {
-        return webDriver.findElement(By.id(id));
+    SelenideElement findElementById(String id) {
+        return $(By.id(id));
     }
 
 }
