@@ -5,6 +5,6 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-class OverviewPage extends AbstractPage {
-    SelenideElement financialFreedom = $(By.xpath("//div[@id='can-spend']/span[@class = 'amount-holder']/span"));
+public class OverviewPage extends AbstractPage {
+    public SelenideElement financialFreedom = $(By.xpath("//div[@id='can-spend']/span[@class = 'amount-holder']/span"));
 }

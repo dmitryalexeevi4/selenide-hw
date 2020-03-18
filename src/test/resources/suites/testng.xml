@@ -4,11 +4,11 @@
     <test name="TestNG сценарии">
         <groups>
             <run>
-<!--                <include name=""/>-->
+                <!--                <include name=""/>-->
             </run>
         </groups>
         <classes>
-            <class name="com.github.dmitryalexeevi4.TestCase"/>
+            <class name="com.github.dmitryalexeevi4.cucumber.CucumberRunnerTest"/>
         </classes>
     </test>
 </suite>

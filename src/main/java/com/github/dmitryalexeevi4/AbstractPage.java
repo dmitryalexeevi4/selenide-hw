@@ -5,25 +5,26 @@ import org.openqa.selenium.*;
 
 import static com.codeborne.selenide.Selenide.*;
 
-abstract class AbstractPage {
+public abstract class AbstractPage {
 
-    String firstTitleWord() {
+    public String firstTitleWord() {
         return title().substring(0, title().indexOf(' '));
     }
 
-    SelenideElement pageHeader() {
+    public SelenideElement pageHeader() {
         return $(By.xpath("//div[@class = 'page-header']/h1"));
     }
 
-    void openNavBarSection(String sectionId) {
+    public AbstractPage openNavBarSection(String sectionId) {
         $(By.xpath("//ul[@class = 'navigation-menu nav']//li[@id = '" + sectionId + "']")).click();
+        return this;
     }
 
-    SelenideElement findElementByClassName(String className) {
+    public SelenideElement findElementByClassName(String className) {
         return $(By.className(className));
     }
 
-    SelenideElement findElementById(String id) {
+    public SelenideElement findElementById(String id) {
         return $(By.id(id));
     }
 

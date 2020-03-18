@@ -1,4 +1,4 @@
 package com.github.dmitryalexeevi4;
 
-class MainPage extends AbstractPage {
+public class MainPage extends AbstractPage {
 }

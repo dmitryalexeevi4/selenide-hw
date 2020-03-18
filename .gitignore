@@ -1,4 +1,5 @@
+.allure
 .idea
+build
 target
 *.iml
-build

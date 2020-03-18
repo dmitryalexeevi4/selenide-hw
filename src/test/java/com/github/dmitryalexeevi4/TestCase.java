@@ -19,14 +19,18 @@ public class TestCase {
         OverviewPage overviewPage = new OverviewPage();
 
         LOG.info("Заполнение полей Username и Password...");
-        loginPage.fieldsInsert("demo", "demo");
+        loginPage
+                .fieldsInsert("demo", "demo")
+                .loginButton();
 
         LOG.info("Проверка на отображение формы двухфакторной авторизации...");
         $(loginPage.findElementById("login-form").shouldBe(visible));
         LOG.info("Форма отображена");
 
         LOG.info("Заполнение поля для кода...");
-        loginPage.codeInsert("0000");
+        loginPage
+                .codeInsert("0000")
+                .loginButton();
 
         LOG.info("Проверка на осуществление входа в систему...");
         $(mainPage.findElementById("user-greeting").shouldBe(visible));
