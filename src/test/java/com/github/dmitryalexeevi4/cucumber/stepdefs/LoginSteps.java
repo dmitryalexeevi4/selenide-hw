@@ -11,33 +11,33 @@ public class LoginSteps {
     LoginPage loginPage = new LoginPage();
     MainPage mainPage = new MainPage();
 
-    @Дано("пользователь входит на страницу логина")
-    public void пользователь_входит_на_страницу_логина() {
+    @Дано("пользователь входит на страницу авторизации")
+    public void openLink() {
         open("https://idemo.bspb.ru");
     }
 
     @И("заполняет поля логина и пароля")
-    public void заполняет_поля_логина_и_пароля() {
+    public void firstLoginAction() {
         loginPage.fieldsInsert("demo", "demo");
     }
 
     @Когда("нажимает кнопку Войти")
-    public void нажимает_кнопку_Войти() {
+    public void pressLoginButton() {
         loginPage.loginButton();
     }
 
     @Тогда("появляется форма двухфакторной авторизации")
-    public void появляется_форма_двухфакторной_авторизации() {
+    public void loginFormCheck() {
         $(loginPage.findElementById("login-form").shouldBe(visible));
     }
 
     @Затем("заполненяет поле для кода")
-    public void заполненяет_поле_для_кода() {
+    public void secondLoginAction() {
         loginPage.codeInsert("0000");
     }
 
     @Тогда("появлется блок приветствия")
-    public void появлется_блок_приветствия() {
+    public void userGreetingCheck() {
         $(mainPage.findElementById("user-greeting").shouldBe(visible));
     }
 }

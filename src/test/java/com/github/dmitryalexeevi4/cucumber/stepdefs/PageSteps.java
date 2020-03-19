@@ -14,43 +14,43 @@ public class PageSteps {
     OverviewPage overviewPage = new OverviewPage();
 
     @Дано("пользователь входит на страницу Обзор")
-    public void пользователь_входит_на_страницу_Обзор() {
+    public void openPage() {
         mainPage.openNavBarSection("overview");
     }
 
 
     @И("текст во вкладке должен содержать слово Обзор")
-    public void текст_во_вкладке_должен_содержать_слово_Обзор() {
+    public void pageTitleCheck() {
         $(overviewPage.pageHeader().shouldHave(text(overviewPage.firstTitleWord())));
     }
 
 
     @Также("на странице должен отображаться блок Финансовая свобода")
-    public void на_странице_должен_отображаться_блок() {
+    public void financialFreedomCheck() {
         $(overviewPage.financialFreedom.shouldBe(visible));
     }
 
 
     @Ктомуже("указанная сумма должна соответствовать формату")
-    public void указанная_сумма_должна_соответствовать_формату() {
+    public void financialAmountCheck() {
         $(overviewPage.financialFreedom.should(matchText("\\d{1,3}\\s\\d{3}\\s\\d{3}\\.\\d{2}\\s\\₽")));
     }
 
 
     @Допустим("пользователь наводит курсор на блок Финансовая свобода")
-    public void пользователь_наводит_курсор_на_блок() {
+    public void moveCursorTo() {
         actions().moveToElement(overviewPage.financialFreedom).perform();
     }
 
 
     @Затем("должна отобразиться строка Мои финансы")
-    public void должна_отобразиться_строка() {
+    public void myAssetsCheck() {
         $(overviewPage.findElementByClassName("my-assets").shouldBe(visible));
     }
 
 
     @А("указанная сумма должна соответсвовать формату")
-    public void указанная_сумма_должна_соответсвовать_формату() {
+    public void myAssetsAmountCheck() {
         $(overviewPage.findElementByClassName("my-assets").shouldHave(matchText("\\d{1,3}\\s\\d{3}\\s\\d{3}\\.\\d{2}\\s\\₽")));
     }
 }
