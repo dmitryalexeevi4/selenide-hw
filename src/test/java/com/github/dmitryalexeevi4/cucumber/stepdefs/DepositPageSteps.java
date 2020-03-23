@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import com.github.dmitryalexeevi4.DepositPage;
 import io.cucumber.java.ru.*;
 import org.testng.Assert;
+
 import java.util.*;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -21,22 +22,21 @@ public class DepositPageSteps {
         depositPage.clickInnerTab(innerTabName);
     }
 
-    @Дано("4 чекбокса и 3 вкладки")
-    public void checkboxesAndTabsCountCheck() {
-        List<String> expectedCheckboxes = Arrays.asList("Хочу снимать", "Хочу пополнять", "Онлайн", "Я - пенсионер");
-
+    @Дано("чекбоксы")
+    public void checkboxesCheck(List<String> dataTable) {
         depositPage.getCheckboxes()
                 .shouldHaveSize(4)
-                .shouldHave(exactTexts(expectedCheckboxes));
+                .shouldHave(exactTexts(dataTable));
 
         depositPage.getCheckbox(2)
                 .shouldBe(checked);
+    }
 
-        List<String> expectedTabs = Arrays.asList("Сохраняй", "Пополняй", "Управляй");
-
+    @И("вкладки")
+    public void tabsCheck(List<String> dataTable) {
         depositPage.getTabs()
                 .shouldHaveSize(3)
-                .shouldHave(textsInAnyOrder(expectedTabs));
+                .shouldHave(textsInAnyOrder(dataTable));
     }
 
     @Когда("пользователь кликает на чекбоксы")
