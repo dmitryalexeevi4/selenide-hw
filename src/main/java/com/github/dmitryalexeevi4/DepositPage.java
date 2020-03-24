@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-public class DepositPage extends AbstractPage {
+public class DepositPage extends Page {
     public SelenideElement moreButton = $(By.cssSelector(".offered-products__button-wrap_more"));
 
     public ElementsCollection getCheckboxes() {
@@ -17,7 +17,7 @@ public class DepositPage extends AbstractPage {
     }
 
     public ElementsCollection getTabs() {
-        return $$(By.cssSelector(".offered-products__item"));
+        return $$(".offered-products__item");
     }
 
     public SelenideElement getCheckbox(int index) {

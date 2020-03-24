@@ -8,8 +8,7 @@ import org.testng.Assert;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PersonPageSteps {
-    PersonPage personPage = new PersonPage();
-    DepositPage depositPage = new DepositPage();
+    Page personPage = new Page();
 
     @Дано("пользователь входит на сайт {string}")
     public void openLink(String link) {
@@ -19,12 +18,11 @@ public class PersonPageSteps {
 
     @Тогда("открывается страница {string}")
     public void personPageTitleCheck(String pageName) {
-        Assert.assertEquals(personPage.getTitle(), "«Сбербанк» - " + pageName);
+        Assert.assertEquals(title(), "«Сбербанк» - " + pageName);
     }
 
-    @Затем("пользователь открывает страницу {string}")
-    public void openSection(String pageName) {
+    @Затем("пользователь открывает страницу Подбор вкладов")
+    public void openSection() {
         personPage.openTab("Вклады").openSection("Вклады");
-        Assert.assertEquals(depositPage.getTitle(), "«Сбербанк» - " + pageName);
     }
 }

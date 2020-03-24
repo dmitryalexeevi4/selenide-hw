@@ -12,13 +12,12 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.CollectionCondition.*;
 
-
-public class DepositPageSteps {
+public class DepositPagesSteps {
     DepositPage depositPage = new DepositPage();
-    DepositPage depositManagePage = new DepositPage();
 
     @И("кликает на вкладку {string}")
     public void openInnerTab(String innerTabName) {
+        Assert.assertEquals(title(), "«Сбербанк» - Подбор вкладов");
         depositPage.clickInnerTab(innerTabName);
     }
 
@@ -61,7 +60,7 @@ public class DepositPageSteps {
     @И("открывает страницу {string}")
     public void depositManagePageTitleCheck(String pageName) {
         switchTo().window(1);
-        Assert.assertEquals(depositManagePage.getTitle(), "«Сбербанк» - " + pageName);
+        Assert.assertEquals(title(), "«Сбербанк» - " + pageName);
         $(By.cssSelector(".product-teaser-full-width > .kit-grid h2.kit-heading")).shouldHave(text(pageName));
     }
 }
